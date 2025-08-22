@@ -629,6 +629,9 @@
             <div class="hadith-title" onclick="showHadithPage('taam', 122)">الطَّعَامُ وَالشَّرَابُ وَاللِّبَاسُ
                 <span class="image-counter">122</span>
             </div>
+            <div class="hadith-title" onclick="showHadithPage('sala', 20)">ٱلصَّلَاةُ
+                <span class="image-counter">20</span>
+            </div>
             <div class="hadith-title" onclick="showHadithPage('قريباً', 6)">قريباً
                 <span class="image-counter">6</span>
             </div>
@@ -2553,6 +2556,74 @@
 
         </div>
     </div>
+    <div id="hadith-page-sala" class="hadith-page">
+        <div class="hadith-header">
+            <div class="hadith-page-title">ٱلصَّلَاةُ</div>
+            <i class="fas fa-home home-icon" onclick="showMainPage()"></i>
+        </div>
+        <div class="hadith-content">
+            <div class="hadith-image-container">
+                <img src="sala01 (1).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala01 (2).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala01 (3).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala01 (4).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala01 (5).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala02 (1).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala02 (2).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala02 (3).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala02 (4).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala02 (5).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala03 (1).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala03 (2).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala03 (3).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala03 (4).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala03 (5).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala04 (1).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala04 (2).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala04 (3).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala04 (4).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala04 (5).jpeg" class="hadith-image">
+            </div>
+        </div>
+    </div>
     <div id="hadith-page-قريباً" class="hadith-page">
         <div class="hadith-header">
             <div class="hadith-page-title">قريباً</div>
@@ -2695,7 +2766,7 @@
                         if (hash === 'main' || hash === '') {
                             showMainPage();
                         } else {
-                            const hadithTitles = ['اَلْحَيَاءُ', 'اَلرِّفْقُ وَالرَّحْمَةُ', 'اَلْغَضَبُ', 'اَلْمُسْلِمُ وَالْمُؤْمِنُ', 'آفَةُ اللِّسَانِ', 'النَّذْرُ وَالحَلِفُ', 'الْعَمَلِ الصَّالِحِ', 'الإِسْلَامُ', 'الِاسْتِئْذَانُ وَالتَّجَسُّسُ', 'اَلتَّحِيَّةُ بِالسَّلَامِ', 'سُلُوكُ الْمُسْلِمِ', 'التَّوَاضُعُ', 'عَشْرُ ذِي الحِجَّةِ', 'الظُّلْمُ', 'المال', 'الصَّدَقَةُ', 'النِّفَاقُ وَالْكَذِبُ وَالنَّمِيمَةُ', 'المدْح', 'النومُ', 'الشيطانُ', 'الطَّعَامُ وَالشَّرَابُ وَاللِّبَاسُ', 'قريباً'];
+                            const hadithTitles = ['اَلْحَيَاءُ', 'اَلرِّفْقُ وَالرَّحْمَةُ', 'اَلْغَضَبُ', 'ٱلصَّلَاةُ', 'اَلْمُسْلِمُ وَالْمُؤْمِنُ', 'آفَةُ اللِّسَانِ', 'النَّذْرُ وَالحَلِفُ', 'الْعَمَلِ الصَّالِحِ', 'الإِسْلَامُ', 'الِاسْتِئْذَانُ وَالتَّجَسُّسُ', 'اَلتَّحِيَّةُ بِالسَّلَامِ', 'سُلُوكُ الْمُسْلِمِ', 'التَّوَاضُعُ', 'عَشْرُ ذِي الحِجَّةِ', 'الظُّلْمُ', 'المال', 'الصَّدَقَةُ', 'النِّفَاقُ وَالْكَذِبُ وَالنَّمِيمَةُ', 'المدْح', 'النومُ', 'الشيطانُ', 'الطَّعَامُ وَالشَّرَابُ وَاللِّبَاسُ', 'قريباً'];
                             if (hadithTitles.includes(hash)) {
                                 showHadithPage(hash, 6);
                             } else {
