@@ -521,6 +521,16 @@
                 font-size: 1.6rem;
             }
         }
+
+        /* Style for external link circle */
+        .hadith-title.external-link {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%) !important;
+        }
+
+        .hadith-title.external-link .image-counter {
+            background-color: var(--gold);
+            color: var(--dark-brown);
+        }
     </style>
 
 </head>
@@ -629,11 +639,12 @@
             <div class="hadith-title" onclick="showHadithPage('taam', 122)">الطَّعَامُ وَالشَّرَابُ وَاللِّبَاسُ
                 <span class="image-counter">122</span>
             </div>
-            <div class="hadith-title" onclick="showHadithPage('sala', 20)">ٱلصَّلَاةُ
-                <span class="image-counter">20</span>
-            </div>
             <div class="hadith-title" onclick="showHadithPage('قريباً', 6)">قريباً
                 <span class="image-counter">6</span>
+            </div>
+            <div class="hadith-title external-link" onclick="openExternalLink()">
+                ٱلصَّلَاةُ
+                <span class="image-counter"><i class="fas fa-external-link-alt"></i></span>
             </div>
         </div>
     </div>
@@ -2838,6 +2849,10 @@
                 }
             });
         });
+        function openExternalLink() {
+            // Replace with your actual external URL
+            window.open('https://mahmoud120182.github.io/salaa/', '_blank');
+        }
     </script>
 </body>
 
