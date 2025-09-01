@@ -642,8 +642,12 @@
             <div class="hadith-title" onclick="showHadithPage('قريباً', 6)">قريباً
                 <span class="image-counter">6</span>
             </div>
-            <div class="hadith-title external-link" onclick="openExternalLink()">
+            <div class="hadith-title external-link" onclick="openExternalLinksala()">
                 ٱلصَّلَاةُ
+                <span class="image-counter"><i class="fas fa-external-link-alt"></i></span>
+            </div>
+            <div class="hadith-title external-link" onclick="openExternalLinkazan()">
+                الأَذَان
                 <span class="image-counter"><i class="fas fa-external-link-alt"></i></span>
             </div>
         </div>
@@ -2849,9 +2853,13 @@
                 }
             });
         });
-        function openExternalLink() {
+        function openExternalLinksala() {
             // Replace with your actual external URL
             window.open('https://mahmoud120182.github.io/salaa/', '_blank');
+        }
+        function openExternalLinkazan() {
+            // Replace with your actual external URL
+            window.open('https://mahmoud120182.github.io/AZAN/', '_blank');
         }
     </script>
 </body>
