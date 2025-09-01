@@ -1,0 +1,2867 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مكارم الأخلاق</title>
+    <meta name="description"
+        content="اللّٰهُمَّ اجْعَلْ هٰذَا صَدَقَةً جَارِيَةً لِي وَلِوَالِدَيَّ وَأَهْلِ بَيْتِي وَلِكُلِّ مَنْ أَرْسَلَهُ وَقَرَأَهُ وَنَفَعَ النَّاسَ بِهِ" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --islamic-green: #2c5e1a;
+            --gold: #d4af37;
+            --light-beige: #f5f5dc;
+            --dark-brown: #5d4037;
+            --dark-green: #1e3c1a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Traditional Arabic', 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: var(--light-beige);
+            color: var(--dark-brown);
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><text x="10" y="50" font-family="Arial" font-size="40" fill="%232c5e1a" opacity="0.05">ﷲ</text></svg>');
+            background-repeat: repeat;
+            line-height: 1.6;
+        }
+
+        /* Loading screen styles */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--dark-green), #1e3c1a);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-content {
+            text-align: center;
+            padding: 30px;
+            max-width: 800px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        .loading-statement {
+            color: #f5f5dc;
+            font-size: 2.2rem;
+            margin-bottom: 40px;
+            line-height: 1.8;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            min-height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.15);
+            transition: all 0.5s ease;
+        }
+
+        .loading-progress {
+            color: var(--gold);
+            font-size: 1.8rem;
+            margin-top: 30px;
+            font-weight: bold;
+        }
+
+        .spinner {
+            width: 70px;
+            height: 70px;
+            border: 6px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--gold);
+            animation: spin 1.5s linear infinite;
+            margin: 0 auto 30px;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-counter {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin-top: 15px;
+        }
+
+        .container {
+            padding: 15px;
+            max-width: 100%;
+            min-height: 100vh;
+            display: none;
+            /* Hidden until images load */
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin: 20px 0;
+            color: var(--islamic-green);
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .page-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            right: 25%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--gold), transparent);
+        }
+
+        .dua-text {
+            text-align: center;
+            font-size: 1.5rem;
+            color: var(--islamic-green);
+            margin: 20px 0;
+            padding: 10px;
+            background-color: rgba(44, 94, 26, 0.1);
+            border-radius: 10px;
+            font-style: italic;
+        }
+
+        .search-bar-container {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 15px 45px 15px 15px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            font-size: 1rem;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: var(--islamic-green);
+            box-shadow: 0 2px 8px rgba(44, 94, 26, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--islamic-green);
+        }
+
+        .hadith-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 25px;
+            padding: 15px;
+        }
+
+        .hadith-title {
+            position: relative;
+            /* Add this line */
+            width: 100%;
+            word-wrap: break-word;
+            aspect-ratio: 1/1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 2.3rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            line-height: 1.3;
+            border: 3px solid white;
+            padding: 15px;
+        }
+
+        /* Update .image-counter with higher z-index and better visibility */
+        .image-counter {
+            position: absolute;
+            top: -5px;
+            /* Changed from -5px */
+            left: -5px;
+            /* Changed from -5px */
+            background-color: var(--light-beige);
+            /* More visible color */
+            color: var(--dark-brown);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            /* Increased from 1 */
+            border: 2px solid white;
+        }
+
+        .hadith-title::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, rgba(255, 255, 255, 0) 70%);
+            border-radius: 50%;
+            /* Add this to contain the gradient */
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .hadith-title:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .hadith-title:hover::before {
+            opacity: 1;
+        }
+
+        /* Different background colors for each hadith title */
+        .hadith-title:nth-child(1) {
+            background-color: #3498db;
+            /* Blue */
+        }
+
+        .hadith-title:nth-child(2) {
+            background-color: #e74c3c;
+            /* Red */
+        }
+
+        .hadith-title:nth-child(3) {
+            background-color: #2ecc71;
+            /* Green */
+        }
+
+        .hadith-title:nth-child(4) {
+            background-color: #9b59b6;
+            /* Purple */
+        }
+
+        .hadith-title:nth-child(5) {
+            background-color: #f39c12;
+            /* Orange */
+        }
+
+        .hadith-title:nth-child(6) {
+            background-color: #1abc9c;
+            /* Teal */
+        }
+
+        .hadith-title:nth-child(7) {
+            background-color: #34495e;
+            /* Dark Gray */
+        }
+
+        .hadith-title:nth-child(8) {
+            background-color: #f1c40f;
+            /* Yellow */
+        }
+
+        .hadith-title:nth-child(9) {
+            background-color: #e67e22;
+            /* Burnt Orange */
+        }
+
+        .hadith-title:nth-child(10) {
+            background-color: #16a085;
+            /* Dark Teal */
+        }
+
+        .hadith-title:nth-child(11) {
+            background-color: #2980b9;
+            /* Darker Blue */
+        }
+
+        .hadith-title:nth-child(12) {
+            background-color: #c0392b;
+            /* Darker Red */
+        }
+
+        .hadith-title:nth-child(13) {
+            background-color: #8e44ad;
+            /* Darker Purple */
+        }
+
+        .hadith-title:nth-child(14) {
+            background-color: #d35400;
+            /* Pumpkin */
+        }
+
+        .hadith-title:nth-child(15) {
+            background-color: #f368e0;
+            /* Pink */
+        }
+
+        .hadith-title:nth-child(16) {
+            background-color: #7f8c8d;
+            /* Gray */
+        }
+
+        .hadith-title:nth-child(17) {
+            background-color: #6a7938;
+            /* Lime Green */
+        }
+
+        .hadith-title:nth-child(18) {
+            background-color: #7d52a3;
+            /* Muted Purple */
+        }
+
+        .hadith-title:nth-child(19) {
+            background-color: #5c8d89;
+            /* Cadet Blue */
+        }
+
+        .hadith-title:nth-child(20) {
+            background-color: #064242;
+            /* Light Cyan */
+        }
+
+        .hadith-title:nth-child(21) {
+            background-color: #ff7f50;
+            /* Coral */
+        }
+
+        .hadith-title:nth-child(22) {
+            background-color: #4682b4;
+            /* Steel Blue */
+        }
+
+        .hadith-title:nth-child(23) {
+            background-color: #a52a2a;
+            /* Brown */
+        }
+
+        /* Hadith Page Styles */
+        .hadith-page {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--light-beige);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .hadith-header {
+            position: sticky;
+            top: 0;
+            background: linear-gradient(to right, var(--islamic-green), #1e8449);
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .hadith-page-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .home-icon {
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: white;
+            position: absolute;
+            right: 15px;
+            transition: transform 0.3s;
+        }
+
+        .home-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .hadith-content {
+            padding: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hadith-image-container {
+            position: relative;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            border: 1px solid #ddd;
+        }
+
+        .hadith-image {
+            width: 100%;
+            display: block;
+        }
+
+        /* Animation for page transitions */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .loading-statement {
+                font-size: 1.8rem;
+                min-height: 150px;
+            }
+
+            .loading-progress {
+                font-size: 1.5rem;
+            }
+
+            .hadith-list {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                /* Increased from 100px */
+                gap: 18px;
+                /* Increased from 15px */
+            }
+
+            .hadith-title {
+                font-size: 2.0rem;
+                /* Increased from 1.7rem */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .loading-statement {
+                font-size: 1.5rem;
+                min-height: 120px;
+            }
+
+            .loading-progress {
+                font-size: 1.2rem;
+            }
+
+            .hadith-list {
+                grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+                /* Increased from 85px */
+                gap: 15px;
+                /* Increased from 10px */
+            }
+
+            .hadith-title {
+                font-size: 1.8rem;
+                /* Increased from 1.5rem */
+                padding: 12px;
+                /* Added padding for better spacing */
+            }
+
+            .image-counter {
+                width: 28px;
+                /* Slightly larger */
+                height: 28px;
+                /* Slightly larger */
+                font-size: 1.0rem;
+                /* Slightly larger */
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Additional media query for very small screens */
+        @media (max-width: 360px) {
+            .hadith-list {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                gap: 12px;
+            }
+
+            .hadith-title {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* Style for external link circle */
+        .hadith-title.external-link {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%) !important;
+        }
+
+        .hadith-title.external-link .image-counter {
+            background-color: var(--gold);
+            color: var(--dark-brown);
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <div id="loading-statement" class="loading-statement">
+                رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ
+            </div>
+            <div id="loading-progress" class="loading-progress">
+                جاري التحميل... <span id="image-count" class="loading-counter">0/0</span>
+            </div>
+        </div>
+    </div>
+    <!-- Dua Text -->
+    <div class="dua-text">اللّٰهُمَّ اجْعَلْ هٰذَا صَدَقَةً جَارِيَةً لِي وَلِوَالِدَيَّ وَأَهْلِ بَيْتِي وَلِكُلِّ مَنْ
+        أَرْسَلَهُ وَقَرَأَهُ وَنَفَعَ النَّاسَ بِهِ</div>
+
+    <!-- Main Page -->
+    <div id="main-page" class="container">
+        <h1 class="page-title">مكارم الأخلاق</h1>
+
+        <div class="search-bar-container">
+            <input type="text" class="search-bar" placeholder="ابحث عن الحديث...">
+            <i class="fas fa-search search-icon"></i>
+        </div>
+
+        <div class="hadith-list">
+            <div class="hadith-title" onclick="showHadithPage('اَلْحَيَاءُ', 6)">اَلْحَيَاءُ
+                <span class="image-counter">6</span>
+
+            </div>
+            <div class="hadith-title" onclick="showHadithPage('اَلرِّفْقُ وَالرَّحْمَةُ', 8)">اَلرِّفْقُ وَالرَّحْمَةُ
+                <span class="image-counter">8</span>
+
+            </div>
+            <div class="hadith-title" onclick="showHadithPage('اَلْغَضَبُ', 8)">اَلْغَضَبُ
+                <span class="image-counter">8</span>
+
+            </div>
+            <div class="hadith-title" onclick="showHadithPage('اَلْمُسْلِمُ وَالْمُؤْمِنُ', 22)">اَلْمُسْلِمُ
+                وَالْمُؤْمِنُ
+                <span class="image-counter">22</span>
+
+            </div>
+            <div class="hadith-title" onclick="showHadithPage('آفَةُ اللِّسَانِ', 22)">آفَةُ اللِّسَانِ
+                <span class="image-counter">22</span>
+
+            </div>
+            <div class="hadith-title" onclick="showHadithPage('النَّذْرُ وَالحَلِفُ', 10)">النَّذْرُ وَالحَلِفُ
+                <span class="image-counter">10</span>
+
+            </div>
+            <div class="hadith-title" onclick="showHadithPage('الْعَمَلِ الصَّالِحِ', 8)">الْعَمَلِ الصَّالِحِ
+                <span class="image-counter">8</span>
+
+            </div>
+            <div class="hadith-title" onclick="showHadithPage('الإِسْلَامُ', 8)">الإِسْلَامُ
+                <span class="image-counter">8</span>
+
+            </div>
+            <div class="hadith-title" onclick="showHadithPage('الِاسْتِئْذَانُ وَالتَّجَسُّسُ', 11)">الِاسْتِئْذَانُ
+                وَالتَّجَسُّسُ
+                <span class="image-counter">11</span>
+
+            </div>
+            <div class="hadith-title" onclick="showHadithPage('اَلتَّحِيَّةُ بِالسَّلَامِ', 7)">اَلتَّحِيَّةُ
+                بِالسَّلَامِ
+                <span class="image-counter">7</span>
+
+            </div>
+            <div class="hadith-title" onclick="showHadithPage('سُلُوكُ الْمُسْلِمِ', 61)">سُلُوكُ الْمُسْلِمِ
+                <span class="image-counter">61</span>
+
+            </div>
+            <div class="hadith-title" onclick="showHadithPage('التَّوَاضُعُ', 9)">التَّوَاضُعُ
+                <span class="image-counter">9</span>
+            </div>
+            <div class="hadith-title" onclick="showHadithPage('عَشْرُ ذِي الحِجَّةِ', 9)">عَشْرُ ذِي الحِجَّةِ
+                <span class="image-counter">9</span>
+            </div>
+            <div class="hadith-title" onclick="showHadithPage('الظُّلْمُ', 26)">الظُّلْمُ
+                <span class="image-counter">26</span>
+            </div>
+            <div class="hadith-title" onclick="showHadithPage('المال', 76)">المال
+                <span class="image-counter">76</span>
+            </div>
+            <div class="hadith-title" onclick="showHadithPage('الصَّدَقَةُ', 61)">الصَّدَقَةُ
+                <span class="image-counter">61</span>
+            </div>
+            <div class="hadith-title" onclick="showHadithPage('nfak', 40)">النِّفَاقُ وَالْكَذِبُ وَالنَّمِيمَةُ
+                <span class="image-counter">40</span>
+            </div>
+            <div class="hadith-title" onclick="showHadithPage('mad7', 10)">المدْح
+                <span class="image-counter">10</span>
+            </div>
+            <div class="hadith-title" onclick="showHadithPage('nom', 25)">النومُ
+                <span class="image-counter">25</span>
+            </div>
+            <div class="hadith-title" onclick="showHadithPage('shait', 41)">الشيطانُ
+                <span class="image-counter">41</span>
+            </div>
+            <div class="hadith-title" onclick="showHadithPage('taam', 122)">الطَّعَامُ وَالشَّرَابُ وَاللِّبَاسُ
+                <span class="image-counter">122</span>
+            </div>
+            <div class="hadith-title" onclick="showHadithPage('قريباً', 6)">قريباً
+                <span class="image-counter">6</span>
+            </div>
+            <div class="hadith-title external-link" onclick="openExternalLinksala()">
+                ٱلصَّلَاةُ
+                <span class="image-counter"><i class="fas fa-external-link-alt"></i></span>
+            </div>
+            <div class="hadith-title external-link" onclick="openExternalLinkazan()">
+                الأَذَان
+                <span class="image-counter"><i class="fas fa-external-link-alt"></i></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hadith Pages (initially hidden) -->
+    <div id="hadith-page-اَلْحَيَاءُ" class="hadith-page">
+        <div class="hadith-header">
+            <div class="hadith-page-title">اَلْحَيَاءُ</div>
+            <i class="fas fa-home home-icon" onclick="showMainPage()"></i>
+        </div>
+        <div class="hadith-content">
+            <div class="hadith-image-container">
+                <img src="hayaa01.jpg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="hayaa02.jpg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="hayaa03.jpg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="hayaa04.jpg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="hayaa05.jpg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="hayaa06.jpg" class="hadith-image">
+            </div>
+        </div>
+    </div>
+
+    <div id="hadith-page-اَلرِّفْقُ وَالرَّحْمَةُ" class="hadith-page">
+        <div class="hadith-header">
+            <div class="hadith-page-title">اَلرِّفْقُ وَالرَّحْمَةُ</div>
+            <i class="fas fa-home home-icon" onclick="showMainPage()"></i>
+        </div>
+        <div class="hadith-content">
+            <div class="hadith-image-container">
+                <img src="refk01.jpg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="refk02.jpg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="refk03.jpg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="refk04.jpg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="refk05.jpg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="refk06.jpg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="refk07.jpg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="refk08.jpg" class="hadith-image">
+            </div>
+        </div>
+    </div>
+
+    <div id="hadith-page-اَلْغَضَبُ" class="hadith-page">
+        <div class="hadith-header">
+            <div class="hadith-page-title">اَلْغَضَبُ</div>
+            <i class="fas fa-home home-icon" onclick="showMainPage()"></i>
+        </div>
+        <div class="hadith-content">
+            <div class="hadith-image-container">
+                <img src="ghdab01.jpg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="ghdab02.jpg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="ghdab03.jpg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="ghdab04.jpg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="ghdab05.jpg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="ghdab06.jpg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="ghdab07.jpg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="ghdab08.jpg" class="hadith-image">
+            </div>
+        </div>
+    </div>
+
+    <div id="hadith-page-اَلْمُسْلِمُ وَالْمُؤْمِنُ" class="hadith-page">
+        <div class="hadith-header">
+            <div class="hadith-page-title">اَلْمُسْلِمُ وَالْمُؤْمِنُ</div>
+            <i class="fas fa-home home-icon" onclick="showMainPage()"></i>
+        </div>
+        <div class="hadith-content">
+            <div class="hadith-image-container">
+                <img src="moemen01.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="moemen02.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="moemen03.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="moemen04.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="moemen05.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="moemen06.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="moemen07.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="moemen08.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="moemen09.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="moemen10.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="moemen11.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="moemen12.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="moemen13.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="moemen14.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="moemen15.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="moemen16.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="moemen17.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="moemen18.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="moemen19.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="moemen20.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="moemen21.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="moemen22.jpeg" class="hadith-image">
+            </div>
+        </div>
+    </div>
+    <div id="hadith-page-آفَةُ اللِّسَانِ" class="hadith-page">
+        <div class="hadith-header">
+            <div class="hadith-page-title">آفَةُ اللِّسَانِ</div>
+            <i class="fas fa-home home-icon" onclick="showMainPage()"></i>
+        </div>
+        <div class="hadith-content">
+            <div class="hadith-image-container">
+                <img src="afa01.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="afa02.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="afa03.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="afa04.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="afa05.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="afa06.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="afa07.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="afa08.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="afa09.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="afa10.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="afa11.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="afa12.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="afa13.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="afa14.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="afa15.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="afa16.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="afa17.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="afa18.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="afa19.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="afa20.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="afa21.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="afa22.jpeg" class="hadith-image">
+            </div>
+        </div>
+    </div>
+    <div id="hadith-page-النَّذْرُ وَالحَلِفُ" class="hadith-page">
+        <div class="hadith-header">
+            <div class="hadith-page-title">النَّذْرُ وَالحَلِفُ</div>
+            <i class="fas fa-home home-icon" onclick="showMainPage()"></i>
+        </div>
+        <div class="hadith-content">
+            <div class="hadith-image-container">
+                <img src="nazr01.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nazr02.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nazr03.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nazr04.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nazr05.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nazr06.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nazr07.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nazr08.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nazr09.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nazr10.jpeg" class="hadith-image">
+            </div>
+        </div>
+    </div>
+    <div id="hadith-page-الْعَمَلِ الصَّالِحِ" class="hadith-page">
+        <div class="hadith-header">
+            <div class="hadith-page-title">الْعَمَلِ الصَّالِحِ</div>
+            <i class="fas fa-home home-icon" onclick="showMainPage()"></i>
+        </div>
+        <div class="hadith-content">
+            <div class="hadith-image-container">
+                <img src="dawam01.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="dawam02.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="dawam03.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="dawam04.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="dawam05.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="dawam06.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="dawam07.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="dawam08.jpeg" class="hadith-image">
+            </div>
+        </div>
+    </div>
+    <div id="hadith-page-الإِسْلَامُ" class="hadith-page">
+        <div class="hadith-header">
+            <div class="hadith-page-title">الإِسْلَامُ</div>
+            <i class="fas fa-home home-icon" onclick="showMainPage()"></i>
+        </div>
+        <div class="hadith-content">
+            <div class="hadith-image-container">
+                <img src="islam01.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="islam02.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="islam03.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="islam04.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="islam05.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="islam06.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="islam07.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="islam08.jpeg" class="hadith-image">
+            </div>
+        </div>
+    </div>
+    <div id="hadith-page-الِاسْتِئْذَانُ وَالتَّجَسُّسُ" class="hadith-page">
+        <div class="hadith-header">
+            <div class="hadith-page-title">الِاسْتِئْذَانُ وَالتَّجَسُّسُ</div>
+            <i class="fas fa-home home-icon" onclick="showMainPage()"></i>
+        </div>
+        <div class="hadith-content">
+            <div class="hadith-image-container">
+                <img src="estez01.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="estez02.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="estez03.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="estez04.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="estez05.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="estez06.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="estez07.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="estez08.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="estez09.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="estez10.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="estez11.jpeg" class="hadith-image">
+            </div>
+        </div>
+    </div>
+    <div id="hadith-page-اَلتَّحِيَّةُ بِالسَّلَامِ" class="hadith-page">
+        <div class="hadith-header">
+            <div class="hadith-page-title">اَلتَّحِيَّةُ بِالسَّلَامِ</div>
+            <i class="fas fa-home home-icon" onclick="showMainPage()"></i>
+        </div>
+        <div class="hadith-content">
+            <div class="hadith-image-container">
+                <img src="salam01.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="salam02.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="salam03.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="salam04.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="salam05.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="salam06.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="salam07.jpeg" class="hadith-image">
+            </div>
+        </div>
+    </div>
+    <div id="hadith-page-سُلُوكُ الْمُسْلِمِ" class="hadith-page">
+        <div class="hadith-header">
+            <div class="hadith-page-title">سُلُوكُ الْمُسْلِمِ</div>
+            <i class="fas fa-home home-icon" onclick="showMainPage()"></i>
+        </div>
+        <div class="hadith-content">
+            <div class="hadith-image-container">
+                <img src="selok01.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok02.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok03.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok04.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok05.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok06.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok07.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok08.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok09.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok10.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok11.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok12.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok13.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok14.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok15.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok16.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok17.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok18.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok19.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok20.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok21.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok22.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok23.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok24.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok25.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok26.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok27.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok28.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok29.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok30.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok31.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok32.jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="selok33.jpeg" class="hadith-image">
+            </div>
+        </div>
+        <div class="hadith-image-container">
+            <img src="selok34.jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="selok35.jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="selok36.jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="selok37.jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="selok38.jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="selok39.jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="selok40.jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="selok41.jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="selok42.jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="selok43.jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="selok44.jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="selok45.jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="selok46.jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="selok47.jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="selok48.jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="selok49.jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="selok50.jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="selok51.jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="selok52.jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="selok53.jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="selok54.jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="selok55.jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="selok56.jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="selok57.jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="selok58.jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="selok59.jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="selok60.jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="selok61.jpeg" class="hadith-image">
+        </div>
+    </div>
+    </div>
+    <div id="hadith-page-التَّوَاضُعُ" class="hadith-page">
+        <div class="hadith-header">
+            <div class="hadith-page-title">التَّوَاضُعُ</div>
+            <i class="fas fa-home home-icon" onclick="showMainPage()"></i>
+        </div>
+        <div class="hadith-content">
+            <div class="hadith-image-container">
+                <img src="tawad (1).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="tawad (2).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="tawad (3).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="tawad (4).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="tawad (5).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="tawad (6).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="tawad (7).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="tawad (8).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="tawad (9).jpeg" class="hadith-image">
+            </div>
+        </div>
+    </div>
+    <div id="hadith-page-عَشْرُ ذِي الحِجَّةِ" class="hadith-page">
+        <div class="hadith-header">
+            <div class="hadith-page-title">عَشْرُ ذِي الحِجَّةِ</div>
+            <i class="fas fa-home home-icon" onclick="showMainPage()"></i>
+        </div>
+        <div class="hadith-content">
+            <div class="hadith-image-container">
+                <img src="asher (1).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="asher (2).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="asher (3).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="asher (4).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="asher (5).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="asher (6).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="asher (7).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="asher (8).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="asher (9).jpeg" class="hadith-image">
+            </div>
+        </div>
+    </div>
+    <div id="hadith-page-الظُّلْمُ" class="hadith-page">
+        <div class="hadith-header">
+            <div class="hadith-page-title">الظُّلْمُ</div>
+            <i class="fas fa-home home-icon" onclick="showMainPage()"></i>
+        </div>
+        <div class="hadith-content">
+            <div class="hadith-image-container">
+                <img src="zolm (1).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="zolm (2).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="zolm (3).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="zolm (4).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="zolm (5).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="zolm (6).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="zolm (7).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="zolm (8).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="zolm (9).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="zolm (10).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="zolm (11).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="zolm (12).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="zolm (13).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="zolm (14).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="zolm (15).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="zolm (16).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="zolm (17).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="zolm (18).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="zolm (19).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="zolm (20).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="zolm (21).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="zolm (22).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="zolm (23).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="zolm (24).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="zolm (25).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="zolm (26).jpeg" class="hadith-image">
+            </div>
+        </div>
+    </div>
+    <div id="hadith-page-المال" class="hadith-page">
+        <div class="hadith-header">
+            <div class="hadith-page-title">المال</div>
+            <i class="fas fa-home home-icon" onclick="showMainPage()"></i>
+        </div>
+        <div class="hadith-content">
+            <div class="hadith-image-container">
+                <img src="mall (1).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (2).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (3).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (4).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (5).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (6).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (7).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (8).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (9).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (10).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (11).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (12).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (13).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (14).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (15).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (16).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (17).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (18).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (19).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (20).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (21).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (22).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (23).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (24).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (25).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (26).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (27).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (28).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (29).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (30).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (31).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (32).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (33).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (34).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (35).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (36).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (37).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (38).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (39).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (40).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (41).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (42).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (43).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (44).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (45).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (46).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (47).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (48).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (49).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (50).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (51).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (52).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (53).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (54).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (55).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (56).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (57).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (58).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (59).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (60).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (61).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (62).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (63).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (64).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (65).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (66).jpeg" class="hadith-image">
+            </div>
+
+            <div class="hadith-image-container">
+                <img src="mall (67).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (68).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (69).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (70).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (71).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (72).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (73).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (74).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (75).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mall (76).jpeg" class="hadith-image">
+            </div>
+        </div>
+    </div>
+    <div id="hadith-page-الصَّدَقَةُ" class="hadith-page">
+        <div class="hadith-header">
+            <div class="hadith-page-title">الصَّدَقَةُ</div>
+            <i class="fas fa-home home-icon" onclick="showMainPage()"></i>
+        </div>
+        <div class="hadith-content">
+            <div class="hadith-image-container">
+                <img src="sadaka (1).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (2).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (3).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (4).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (5).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (6).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (7).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (8).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (9).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (10).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (11).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (12).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (13).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (14).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (15).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (16).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (17).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (18).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (19).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (20).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (21).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (22).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (23).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (24).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (25).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (26).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (27).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (28).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (29).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (30).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (31).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (32).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (33).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (34).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (35).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (36).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (37).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (38).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (39).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (40).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (41).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (42).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (43).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (44).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (45).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (46).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (47).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (48).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (49).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (50).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (51).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (52).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (53).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (54).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (55).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (56).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (57).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (58).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (59).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (60).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sadaka (61).jpeg" class="hadith-image">
+            </div>
+        </div>
+    </div>
+    <div id="hadith-page-nfak" class="hadith-page">
+        <div class="hadith-header">
+            <div class="hadith-page-title">النِّفَاقُ وَالْكَذِبُ وَالنَّمِيمَةُ</div>
+            <i class="fas fa-home home-icon" onclick="showMainPage()"></i>
+        </div>
+        <div class="hadith-content">
+            <div class="hadith-image-container">
+                <img src="nfak (1).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (2).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (3).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (4).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (5).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (6).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (7).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (8).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (9).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (10).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (11).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (12).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (13).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (14).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (15).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (16).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (17).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (18).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (19).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (20).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (21).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (22).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (23).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (24).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (25).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (26).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (27).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (28).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (29).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (30).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (31).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (32).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (33).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (34).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (35).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (36).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (37).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (38).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (39).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="nfak (40).jpeg" class="hadith-image">
+            </div>
+        </div>
+    </div>
+    <div id="hadith-page-mad7" class="hadith-page">
+        <div class="hadith-header">
+            <div class="hadith-page-title">المدْح</div>
+            <i class="fas fa-home home-icon" onclick="showMainPage()"></i>
+        </div>
+        <div class="hadith-content">
+            <div class="hadith-image-container">
+                <img src="mad7 (1).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mad7 (2).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mad7 (3).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mad7 (4).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mad7 (5).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mad7 (6).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mad7 (7).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mad7 (8).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mad7 (9).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="mad7 (10).jpeg" class="hadith-image">
+            </div>
+        </div>
+    </div>
+    <div id="hadith-page-nom" class="hadith-page">
+        <div class="hadith-header">
+            <div class="hadith-page-title">النومُ</div>
+            <i class="fas fa-home home-icon" onclick="showMainPage()"></i>
+        </div>
+        <div class="hadith-image-container">
+            <img src="nom (1).jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="nom (2).jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="nom (3).jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="nom (4).jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="nom (5).jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="nom (6).jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="nom (7).jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="nom (8).jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="nom (9).jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="nom (10).jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="nom (11).jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="nom (12).jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="nom (13).jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="nom (14).jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="nom (15).jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="nom (16).jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="nom (17).jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="nom (18).jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="nom (19).jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="nom (20).jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="nom (21).jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="nom (22).jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="nom (23).jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="nom (24).jpeg" class="hadith-image">
+        </div>
+        <div class="hadith-image-container">
+            <img src="nom (25).jpeg" class="hadith-image">
+        </div>
+    </div>
+    </div>
+    <div id="hadith-page-shait" class="hadith-page">
+        <div class="hadith-header">
+            <div class="hadith-page-title">الشيطانُ</div>
+            <i class="fas fa-home home-icon" onclick="showMainPage()"></i>
+        </div>
+        <div class="hadith-content">
+            <div class="hadith-image-container">
+                <img src="shait (1).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (2).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (3).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (4).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (5).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (6).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (7).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (8).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (9).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (10).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (11).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (12).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (13).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (14).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (15).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (16).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (17).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (18).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (19).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (20).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (21).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (22).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (23).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (24).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (25).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (26).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (27).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (28).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (29).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (30).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (31).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (32).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (33).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (34).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (35).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (36).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (37).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (38).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (39).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (40).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="shait (41).jpeg" class="hadith-image">
+            </div>
+        </div>
+    </div>
+    <div id="hadith-page-taam" class="hadith-page">
+        <div class="hadith-header">
+            <div class="hadith-page-title">الطَّعَامُ وَالشَّرَابُ وَاللِّبَاسُ</div>
+            <i class="fas fa-home home-icon" onclick="showMainPage()"></i>
+        </div>
+        <div class="hadith-content">
+            <div class="hadith-image-container">
+                <img src="taam (1).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (2).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (3).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (4).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (5).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (6).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (7).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (8).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (9).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (10).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (11).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (12).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (13).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (14).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (15).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (16).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (17).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (18).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (19).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (20).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (21).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (22).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (23).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (24).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (25).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (26).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (27).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (28).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (29).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (30).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (31).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (32).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (33).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (34).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (35).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (36).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (37).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (38).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (39).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (40).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (41).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (42).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (43).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (44).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (45).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (46).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (47).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (48).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (49).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (50).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (51).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (52).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (53).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (54).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (55).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (56).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (57).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (58).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (59).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (60).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (61).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (62).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (63).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (64).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (65).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (66).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (67).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (68).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (69).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (70).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (71).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (72).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (73).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (74).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (75).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (76).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (77).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (78).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (79).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (80).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (81).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (82).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (83).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (84).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (85).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (86).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (87).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (88).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (89).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (90).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (91).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (92).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (93).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (94).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (95).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (96).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (97).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (98).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (99).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (100).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (101).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="taam (102).jpeg" class="hadith-image">
+            </div>
+
+        </div>
+    </div>
+    <div id="hadith-page-sala" class="hadith-page">
+        <div class="hadith-header">
+            <div class="hadith-page-title">ٱلصَّلَاةُ</div>
+            <i class="fas fa-home home-icon" onclick="showMainPage()"></i>
+        </div>
+        <div class="hadith-content">
+            <div class="hadith-image-container">
+                <img src="sala01 (1).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala01 (2).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala01 (3).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala01 (4).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala01 (5).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala02 (1).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala02 (2).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala02 (3).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala02 (4).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala02 (5).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala03 (1).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala03 (2).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala03 (3).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala03 (4).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala03 (5).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala04 (1).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala04 (2).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala04 (3).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala04 (4).jpeg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="sala04 (5).jpeg" class="hadith-image">
+            </div>
+        </div>
+    </div>
+    <div id="hadith-page-قريباً" class="hadith-page">
+        <div class="hadith-header">
+            <div class="hadith-page-title">قريباً</div>
+            <i class="fas fa-home home-icon" onclick="showMainPage()"></i>
+        </div>
+        <div class="hadith-content">
+            <div class="hadith-image-container">
+                <img src="1.jpg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="1.jpg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="1.jpg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="1.jpg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="1.jpg" class="hadith-image">
+            </div>
+            <div class="hadith-image-container">
+                <img src="1.jpg" class="hadith-image">
+            </div>
+        </div>
+    </div>
+    <script>
+        // Handle back button press
+        window.addEventListener('popstate', function (event) {
+            // Check if we're on a hadith page
+            const hadithPages = document.querySelectorAll('.hadith-page');
+            let onHadithPage = false;
+
+            hadithPages.forEach(page => {
+                if (page.style.display === 'block') {
+                    onHadithPage = true;
+                }
+            });
+
+            if (onHadithPage) {
+                showMainPage();
+                // Prevent default back behavior
+                history.pushState(null, null, document.location);
+                event.preventDefault();
+            }
+        });
+
+        // Initialize history state
+        history.pushState(null, null, document.location);
+
+        // Array of loading statements
+        const loadingStatements = [
+            "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ",
+            "رَبَّنَا لَا تُزِغْ قُلُوبَنَا بَعْدَ إِذْ هَدَيْتَنَا وَهَبْ لَنَا مِن لَّدُنكَ رَحْمَةً ۚ إِنَّكَ أَنتَ الْوَهَّابُ",
+            "رَبَّنَا لاَ تُؤَاخِذْنَا إِن نَّسِينَا أَوْ أَخْطَأْنَا",
+            "رَبَّنَا وَلاَ تَحْمِلْ عَلَيْنَا إِصْرًا كَمَا حَمَلْتَهُ عَلَى الَّذِينَ مِن قَبْلِنَا",
+            "رَبَّنَا وَلاَ تُحَمِّلْنَا مَا لاَ طَاقَةَ لَنَا بِهِ"
+        ];
+
+        // Function to show a random statement
+        function showRandomStatement() {
+            const randomIndex = Math.floor(Math.random() * loadingStatements.length);
+            document.getElementById('loading-statement').textContent = loadingStatements[randomIndex];
+        }
+
+        // Start showing random statements every 3 seconds
+        let statementInterval = setInterval(showRandomStatement, 3000);
+
+        // حل مشكلة التحميل
+        window.addEventListener('load', function () {
+            // قائمة بجميع مسارات الصور الفريدة
+            const allImagePaths = new Set();
+
+            // جمع مسارات الصور من جميع الصفحات
+            const imageContainers = document.querySelectorAll('.hadith-image');
+            imageContainers.forEach(img => {
+                // Get the actual image path
+                const imgPath = new URL(img.src, window.location.href).href;
+                allImagePaths.add(imgPath);
+            });
+
+            const totalImages = allImagePaths.size;
+            let loadedImages = 0;
+
+            // تحديث العداد
+            document.getElementById('image-count').textContent = `0/${totalImages}`;
+
+            // إذا لم توجد صور، اخفي شاشة التحميل فورًا
+            if (totalImages === 0) {
+                hideLoadingScreen();
+                return;
+            }
+
+            // تحميل كل صورة
+            allImagePaths.forEach(src => {
+                const img = new Image();
+                img.onload = () => {
+                    loadedImages++;
+                    updateProgress(loadedImages, totalImages);
+                    if (loadedImages === totalImages) {
+                        hideLoadingScreen();
+                    }
+                };
+                img.onerror = () => {
+                    loadedImages++;
+                    updateProgress(loadedImages, totalImages);
+                    if (loadedImages === totalImages) {
+                        hideLoadingScreen();
+                    }
+                };
+                img.src = src;
+            });
+
+            // مهلة زمنية لضمان عدم التوقف للأبد
+            setTimeout(() => {
+                if (loadedImages < totalImages) {
+                    hideLoadingScreen();
+                }
+            }, 10000); // 10 ثواني كحد أقصى
+        });
+
+        // تحديث شريط التقدم
+        function updateProgress(loaded, total) {
+            document.getElementById('image-count').textContent = `${loaded}/${total}`;
+        }
+
+        // إخفاء شاشة التحميل
+        function hideLoadingScreen() {
+            setTimeout(() => {
+                document.getElementById('loading-screen').style.opacity = '0';
+                document.getElementById('main-page').style.display = 'block';
+
+                setTimeout(() => {
+                    document.getElementById('loading-screen').style.display = 'none';
+                    clearInterval(statementInterval);
+
+                    // Handle initial page load after images are loaded
+                    if (window.location.hash) {
+                        const hash = window.location.hash.substring(1);
+                        if (hash === 'main' || hash === '') {
+                            showMainPage();
+                        } else {
+                            const hadithTitles = ['اَلْحَيَاءُ', 'اَلرِّفْقُ وَالرَّحْمَةُ', 'اَلْغَضَبُ', 'ٱلصَّلَاةُ', 'اَلْمُسْلِمُ وَالْمُؤْمِنُ', 'آفَةُ اللِّسَانِ', 'النَّذْرُ وَالحَلِفُ', 'الْعَمَلِ الصَّالِحِ', 'الإِسْلَامُ', 'الِاسْتِئْذَانُ وَالتَّجَسُّسُ', 'اَلتَّحِيَّةُ بِالسَّلَامِ', 'سُلُوكُ الْمُسْلِمِ', 'التَّوَاضُعُ', 'عَشْرُ ذِي الحِجَّةِ', 'الظُّلْمُ', 'المال', 'الصَّدَقَةُ', 'النِّفَاقُ وَالْكَذِبُ وَالنَّمِيمَةُ', 'المدْح', 'النومُ', 'الشيطانُ', 'الطَّعَامُ وَالشَّرَابُ وَاللِّبَاسُ', 'قريباً'];
+                            if (hadithTitles.includes(hash)) {
+                                showHadithPage(hash, 6);
+                            } else {
+                                showMainPage();
+                            }
+                        }
+                    } else {
+                        showMainPage();
+                    }
+                }, 500);
+            }, 800);
+        }
+
+        function showHadithPage(title, imageCount) {
+            // Hide all pages
+            document.getElementById('main-page').style.display = 'none';
+            const pages = document.querySelectorAll('.hadith-page');
+            pages.forEach(page => {
+                page.style.display = 'none';
+            });
+
+            // Show the selected hadith page
+            const pageId = 'hadith-page-' + title;
+            const hadithPage = document.getElementById(pageId);
+            if (hadithPage) {
+                hadithPage.style.display = 'block';
+                hadithPage.classList.add('fade-in');
+            } else {
+                showMainPage();
+                return;
+            }
+
+            // Update history state
+            history.pushState({ hadithPage: true }, null, `#${title}`);
+
+            // Ensure the page scrolls to top
+            window.scrollTo(0, 0);
+        }
+
+        function showMainPage() {
+            // Hide all hadith pages
+            const pages = document.querySelectorAll('.hadith-page');
+            pages.forEach(page => {
+                page.style.display = 'none';
+            });
+
+            // Show main page
+            document.getElementById('main-page').style.display = 'block';
+            document.getElementById('main-page').classList.add('fade-in');
+
+            // Update history state
+            history.pushState({ mainPage: true }, null, '#main');
+
+            // Ensure the page scrolls to top
+            window.scrollTo(0, 0);
+        }
+
+        // Search functionality
+        document.querySelector('.search-bar').addEventListener('input', function (e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const hadithTitles = document.querySelectorAll('.hadith-title');
+
+            hadithTitles.forEach(title => {
+                const text = title.textContent.toLowerCase();
+                if (text.includes(searchTerm)) {
+                    title.style.display = 'flex';
+                } else {
+                    title.style.display = 'none';
+                }
+            });
+        });
+        function openExternalLinksala() {
+            // Replace with your actual external URL
+            window.open('https://mahmoud120182.github.io/salaa/', '_blank');
+        }
+        function openExternalLinkazan() {
+            // Replace with your actual external URL
+            window.open('https://mahmoud120182.github.io/AZAN/', '_blank');
+        }
+    </script>
+</body>
+
+</html>
